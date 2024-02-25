@@ -11,7 +11,7 @@ on:
       working-directory:
         description: "Working directory to use"
         type: "string"
-        default: ""./"
+        default: "./"
 
 env:
   extensions: "json, :php-psr"
