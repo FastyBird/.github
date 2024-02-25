@@ -69,8 +69,8 @@ jobs:
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Coding Standard"
-        working-directory: ${{ inputs.working-directory }}
         run: "make cs"
+        working-directory: ${{ inputs.working-directory }}
 
   static-analysis:
     name: "Code static analysis"
@@ -120,8 +120,8 @@ jobs:
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "PHPStan"
-        working-directory: ${{ inputs.working-directory }}
         run: "make phpstan"
+        working-directory: ${{ inputs.working-directory }}
 
   tests:
     name: "Code tests"
@@ -179,8 +179,8 @@ jobs:
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Tests"
-        working-directory: ${{ inputs.working-directory }}
         run: "make tests"
+        working-directory: ${{ inputs.working-directory }}
 
       - name: "Upload logs"
         uses: "actions/upload-artifact@v3"
@@ -248,11 +248,10 @@ jobs:
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Tests"
-        working-directory: ${{ inputs.working-directory }}
         run: "make coverage-clover"
+        working-directory: ${{ inputs.working-directory }}
 
       - name: "Coveralls.io"
-        working-directory: ${{ inputs.working-directory }}
         env:
           CI_NAME: github
           CI: true
@@ -260,6 +259,7 @@ jobs:
         run: |
           wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
           php php-coveralls.phar --verbose --config tools/.coveralls.yml
+        working-directory: ${{ inputs.working-directory }}
 
   tests-mutations:
     name: "Test for mutants"
@@ -318,8 +318,8 @@ jobs:
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Mutation tests"
-        working-directory: ${{ inputs.working-directory }}
         run: "make mutations-tests"
+        working-directory: ${{ inputs.working-directory }}
 
       - name: "Cache Infection data"
         uses: "actions/cache@v3"
@@ -330,11 +330,11 @@ jobs:
           restore-keys: "php-infection-${{ runner.os }}"
 
       - name: "Mutation tests with report"
-        working-directory: ${{ inputs.working-directory }}
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         shell: "bash"
         run: "make mutations-infection ARGS='--logger-github'"
+        working-directory: ${{ inputs.working-directory }}
 
       - name: "Upload logs"
         uses: "actions/upload-artifact@v3"
@@ -392,5 +392,5 @@ jobs:
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Check php linter"
-        working-directory: ${{ inputs.working-directory }}
         run: "make lint"
+        working-directory: ${{ inputs.working-directory }}
