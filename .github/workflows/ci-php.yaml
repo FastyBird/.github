@@ -66,11 +66,11 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
-        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          working-directory: ${{ inputs.working-directory }}
 
       - name: "Coding Standard"
         run: "make cs"
@@ -120,11 +120,11 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
-        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          working-directory: ${{ inputs.working-directory }}
 
       - name: "PHPStan"
         run: "make phpstan"
@@ -182,22 +182,22 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
-        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          working-directory: ${{ inputs.working-directory }}
 
       - name: "Tests"
         run: "make tests"
 
       - name: "Upload logs"
         uses: "actions/upload-artifact@v3"
-        working-directory: ${{ inputs.working-directory }}
         with:
           name: "Logs - Tests (${{ matrix.operating-system }}, ${{ inputs.php-version }})"
           path: "var/log"
           if-no-files-found: "ignore"
+          working-directory: ${{ inputs.working-directory }}
 
   tests-code-coverage:
     name: "Code tests with code coverage"
@@ -254,11 +254,11 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
-        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          working-directory: ${{ inputs.working-directory }}
 
       - name: "Tests"
         run: "make coverage-clover"
@@ -326,22 +326,22 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
-        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          working-directory: ${{ inputs.working-directory }}
 
       - name: "Mutation tests"
         run: "make mutations-tests"
 
       - name: "Cache Infection data"
         uses: "actions/cache@v3"
-        working-directory: ${{ inputs.working-directory }}
         with:
           path: "var/tools/Infection"
           key: "php-infection-${{ runner.os }}"
           restore-keys: "php-infection-${{ runner.os }}"
+          working-directory: ${{ inputs.working-directory }}
 
       - name: "Mutation tests with report"
         env:
@@ -351,11 +351,11 @@ jobs:
 
       - name: "Upload logs"
         uses: "actions/upload-artifact@v3"
-        working-directory: ${{ inputs.working-directory }}
         with:
           name: "Logs - Mutations"
           path: "var/coverage/mutations/infection.log"
           if-no-files-found: "ignore"
+          working-directory: ${{ inputs.working-directory }}
 
   lint:
     name: "Code linting"
@@ -402,11 +402,11 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
-        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+          working-directory: ${{ inputs.working-directory }}
 
       - name: "Check php linter"
         run: "make lint"
