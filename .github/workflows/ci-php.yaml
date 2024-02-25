@@ -30,8 +30,6 @@ jobs:
       matrix:
         operating-system: [ "ubuntu-latest" ]
 
-    working-directory: ${{ inputs.working-directory }}
-
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v4"
@@ -64,12 +62,14 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
+        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Coding Standard"
+        working-directory: ${{ inputs.working-directory }}
         run: "make cs"
 
   static-analysis:
@@ -80,8 +80,6 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ "ubuntu-latest" ]
-
-    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -115,12 +113,14 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
+        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "PHPStan"
+        working-directory: ${{ inputs.working-directory }}
         run: "make phpstan"
 
   tests:
@@ -132,8 +132,6 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ "ubuntu-latest" ]
-
-    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -174,16 +172,19 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
+        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Tests"
+        working-directory: ${{ inputs.working-directory }}
         run: "make tests"
 
       - name: "Upload logs"
         uses: "actions/upload-artifact@v3"
+        working-directory: ${{ inputs.working-directory }}
         with:
           name: "Logs - Tests (${{ matrix.operating-system }}, ${{ inputs.php-version }})"
           path: "var/log"
@@ -200,8 +201,6 @@ jobs:
       fail-fast: false
 
     if: "github.event_name == 'push'"
-
-    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -242,15 +241,18 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
+        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Tests"
+        working-directory: ${{ inputs.working-directory }}
         run: "make coverage-clover"
 
       - name: "Coveralls.io"
+        working-directory: ${{ inputs.working-directory }}
         env:
           CI_NAME: github
           CI: true
@@ -270,8 +272,6 @@ jobs:
 
     if: "github.event_name == 'push'"
 
-    working-directory: ${{ inputs.working-directory }}
-
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v4"
@@ -311,22 +311,26 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
+        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Mutation tests"
+        working-directory: ${{ inputs.working-directory }}
         run: "make mutations-tests"
 
       - name: "Cache Infection data"
         uses: "actions/cache@v3"
+        working-directory: ${{ inputs.working-directory }}
         with:
           path: "var/tools/Infection"
           key: "php-infection-${{ runner.os }}"
           restore-keys: "php-infection-${{ runner.os }}"
 
       - name: "Mutation tests with report"
+        working-directory: ${{ inputs.working-directory }}
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         shell: "bash"
@@ -334,6 +338,7 @@ jobs:
 
       - name: "Upload logs"
         uses: "actions/upload-artifact@v3"
+        working-directory: ${{ inputs.working-directory }}
         with:
           name: "Logs - Mutations"
           path: "var/coverage/mutations/infection.log"
@@ -347,8 +352,6 @@ jobs:
       matrix:
         operating-system: [ "ubuntu-latest" ]
       fail-fast: false
-
-    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -382,10 +385,12 @@ jobs:
 
       - name: "Setup composer & install dependencies"
         uses: "ramsey/composer-install@v2"
+        working-directory: ${{ inputs.working-directory }}
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.composer-options }}"
           custom-cache-key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
 
       - name: "Check php linter"
+        working-directory: ${{ inputs.working-directory }}
         run: "make lint"
