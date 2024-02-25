@@ -17,7 +17,7 @@ env:
   extensions: "json, :php-psr"
   cache-version: "1"
   composer-version: "v2"
-  composer-options: "--no-interaction --no-progress --no-suggest --prefer-dist --prefer-stable"
+  composer-options: "--no-interaction --no-progress --prefer-dist --prefer-stable"
   COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.ORGANIZATION_ACCESS_TOKEN }}"}}'
 
 jobs:
@@ -30,9 +30,7 @@ jobs:
       matrix:
         operating-system: [ "ubuntu-latest" ]
 
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
+    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -83,9 +81,7 @@ jobs:
       matrix:
         operating-system: [ "ubuntu-latest" ]
 
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
+    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -137,9 +133,7 @@ jobs:
       matrix:
         operating-system: [ "ubuntu-latest" ]
 
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
+    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -207,9 +201,7 @@ jobs:
 
     if: "github.event_name == 'push'"
 
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
+    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -278,9 +270,7 @@ jobs:
 
     if: "github.event_name == 'push'"
 
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
+    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
@@ -358,9 +348,7 @@ jobs:
         operating-system: [ "ubuntu-latest" ]
       fail-fast: false
 
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
+    working-directory: ${{ inputs.working-directory }}
 
     steps:
       - name: "Checkout"
