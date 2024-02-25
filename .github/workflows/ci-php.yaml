@@ -5,12 +5,12 @@ on:
     inputs:
       php-version:
         description: "PHP version"
-        type: "string"
-        required: "true"
+        type: string
+        required: true
 
       working-directory:
         description: "Working directory to use"
-        type: "string"
+        type: string
         default: "./"
 
 env:
