@@ -1,4 +1,4 @@
-name: "PHP Code Tests"
+name: "PHP Code Coverage"
 
 on:
   workflow_call:
@@ -6,7 +6,7 @@ on:
       make:
         required: false
         type: string
-        default: "tests"
+        default: "coverage-clover"
 
       php:
         required: false
@@ -28,17 +28,12 @@ on:
         type: boolean
         default: true
 
-      coverage:
-        required: false
-        type: boolean
-        default: false
-
 env:
   COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.ORGANIZATION_ACCESS_TOKEN }}"}}'
 
 jobs:
   tests:
-    name: "Code Tests (PHP ${{ inputs.php }})"
+    name: "Code Coverage (PHP ${{ inputs.php }})"
     runs-on: "${{ matrix.operating-system }}"
 
     strategy:
@@ -51,16 +46,10 @@ jobs:
         uses: "actions/checkout@v4"
 
       - name: "PHP"
-        if: ${{ inputs.coverage == false }}
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
           php: "${{ inputs.php }}"
-
-      - name: "PHP"
-        if: ${{ inputs.coverage == true }}
-        uses: "fastybird/.github/.github/actions/setup-php@main"
-        with:
-          php: "${{ inputs.php }}"
+          coverage: "pcov"
 
       - name : "Setup MySQL"
         if: ${{ inputs.mysql == true }}
@@ -88,3 +77,13 @@ jobs:
           name: "Logs - Tests (${{ matrix.operating-system }}, ${{ inputs.php }})"
           path: "var/log"
           if-no-files-found: "ignore"
+
+      - name: "Coveralls.io"
+        if: ${{ inputs.coverage == true }}
+        env:
+          CI_NAME: github
+          CI: true
+          COVERALLS_REPO_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar
+          php php-coveralls.phar --verbose --config tools/.coveralls.yml
