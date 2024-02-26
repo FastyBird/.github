@@ -30,7 +30,7 @@ env:
 
 jobs:
   qa:
-    name: "Coding Linting (${{ inputs.php }})"
+    name: "Coding Linting (PHP ${{ inputs.php }})"
     runs-on: "${{ matrix.operating-system }}"
 
     strategy:

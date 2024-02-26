@@ -15,7 +15,7 @@ on:
 
 jobs:
   static-analysis:
-    name: "Coding Standard (${{ inputs.node }})"
+    name: "Coding Standard (Node ${{ inputs.node }})"
     runs-on: "${{ matrix.operating-system }}"
 
     strategy:

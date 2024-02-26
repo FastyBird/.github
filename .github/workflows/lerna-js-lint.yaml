@@ -15,7 +15,7 @@ on:
 
 jobs:
   qa:
-    name: "Coding Linting (${{ inputs.node }})"
+    name: "Coding Linting (Node ${{ inputs.node }})"
     runs-on: "${{ matrix.operating-system }}"
 
     strategy:

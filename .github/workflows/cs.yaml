@@ -30,7 +30,7 @@ env:
 
 jobs:
   qa:
-    name: "Coding Standard (${{ inputs.php }})"
+    name: "Coding Standard (PHP ${{ inputs.php }})"
     runs-on: "${{ matrix.operating-system }}"
 
     strategy:

@@ -28,7 +28,7 @@ env:
 
 jobs:
   static-analysis:
-    name: "Code Static Analysis (${{ inputs.php }})"
+    name: "Code Static Analysis (PHP ${{ inputs.php }})"
     runs-on: "${{ matrix.operating-system }}"
 
     strategy:

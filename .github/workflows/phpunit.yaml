@@ -38,7 +38,7 @@ env:
 
 jobs:
   tests:
-    name: "Code Tests (${{ inputs.php }})"
+    name: "Code Tests (PHP ${{ inputs.php }})"
     runs-on: "${{ matrix.operating-system }}"
 
     strategy:
