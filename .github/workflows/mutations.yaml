@@ -1,4 +1,4 @@
-name: "Mutation Tests"
+name: "PHP Mutation Tests"
 
 on:
   workflow_call:

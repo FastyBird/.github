@@ -1,4 +1,4 @@
-name: "Coding Standard Check"
+name: "Lerna Coding Standard Check"
 
 on:
   workflow_call:

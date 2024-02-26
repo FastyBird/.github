@@ -1,4 +1,4 @@
-name: "Coding Linting"
+name: "PHP Coding Linting"
 
 on:
   workflow_call:

@@ -1,4 +1,4 @@
-name: "Coding Standard Check"
+name: "PHP Coding Standard Check"
 
 on:
   workflow_call:

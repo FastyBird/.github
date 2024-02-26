@@ -1,4 +1,4 @@
-name: "Coding Linting"
+name: "Lerna Coding Linting"
 
 on:
   workflow_call:

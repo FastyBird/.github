@@ -1,4 +1,4 @@
-name: "Code Tests"
+name: "PHP Code Tests"
 
 on:
   workflow_call:

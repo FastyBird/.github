@@ -1,4 +1,4 @@
-name: "Code Static Analysis"
+name: "PHP Code Static Analysis"
 
 on:
   workflow_call:
