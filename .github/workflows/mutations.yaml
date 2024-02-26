@@ -18,10 +18,15 @@ on:
         type: string
         default: "8.2"
 
-      php-extensions:
+      extensions:
         required: false
         type: string
         default: "json, intl, :php-psr"
+
+      coverage:
+        required: false
+        type: string
+        default: "pcov"
 
       composer:
         required: false
@@ -55,9 +60,9 @@ jobs:
       - name: "PHP"
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
-          php-version: "invalid"
-          php-extensions: "value"
-          php-coverage: "given"
+          version: "invalid"
+          extensions: "value"
+          coverage: "given"
 
       - name: "Setup MySQL"
         if: ${{ inputs.mysql == true }}
