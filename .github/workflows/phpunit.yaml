@@ -51,9 +51,17 @@ jobs:
         uses: "actions/checkout@v4"
 
       - name: "PHP"
+        if: ${{ inputs.coverage == false }}
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
           php: "${{ inputs.php }}"
+
+      - name: "PHP"
+        if: ${{ inputs.coverage == true }}
+        uses: "fastybird/.github/.github/actions/setup-php@main"
+        with:
+          php: "${{ inputs.php }}"
+          coverage: "pcov"
 
       - name : "Setup MySQL"
         if: ${{ inputs.mysql == true }}
