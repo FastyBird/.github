@@ -46,6 +46,7 @@ jobs:
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
           php: "${{ inputs.php }}"
+          extensions: "${{ inputs.php-extensions }}"
 
       - name: "Composer"
         uses: "fastybird/.github/.github/actions/setup-composer@main"

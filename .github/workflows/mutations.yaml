@@ -56,6 +56,7 @@ jobs:
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
           php: "${{ inputs.php }}"
+          extensions: "${{ inputs.php-extensions }}"
           coverage: "pcov"
 
       - name : "Setup MySQL"

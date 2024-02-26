@@ -55,6 +55,7 @@ jobs:
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
           php: "${{ inputs.php }}"
+          extensions: "${{ inputs.php-extensions }}"
 
       - name: "PHP"
         if: ${{ inputs.coverage == true }}
