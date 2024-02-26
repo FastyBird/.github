@@ -1,0 +1,30 @@
+name: "Yarn"
+description: "Setup Yarn"
+
+inputs:
+  command:
+    required: false
+    type: string
+    default: "yarn install"
+    description: "Yarn install command"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: "Get Yarn cache directory"
+      id: "yarn-cache-dir-path"
+      shell: "bash"
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: "Cache JS dependencies"
+      uses: "actions/cache@v3"
+      with:
+        path: "${{ steps.yarn-cache-dir-path.outputs.dir }}"
+        key: "${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}"
+        restore-keys: "${{ runner.os }}-node-modules-"
+
+    - name: "Install NPM dependencies"
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      shell: "bash"
+      run: "${{ inputs.command }}"

@@ -1,0 +1,54 @@
+name: "Code Static Analysis"
+
+on:
+  workflow_call:
+    inputs:
+      make:
+        required: false
+        type: string
+        default: "phpstan"
+
+      php:
+        required: false
+        type: string
+        default: "8.2"
+
+      php-extensions:
+        required: false
+        type: string
+        default: "json, :php-psr"
+
+      composer:
+        required: false
+        type: string
+        default: "composer install --no-interaction --no-progress --prefer-dist --prefer-stable"
+
+env:
+  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.ORGANIZATION_ACCESS_TOKEN }}"}}'
+
+jobs:
+  static-analysis:
+    name: "Code Static Analysis (${{ inputs.php }})"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ "ubuntu-latest" ]
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "PHP"
+        uses: "fastybird/.github/.github/actions/setup-php@main"
+        with:
+          php: "${{ inputs.php }}"
+
+      - name: "Composer"
+        uses: "fastybird/.github/.github/actions/setup-composer@main"
+        with:
+          command: "${{ inputs.composer }}"
+
+      - name: "PHPStan"
+        run: "make ${{ inputs.make }}"

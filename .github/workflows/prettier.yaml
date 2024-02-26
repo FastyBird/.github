@@ -1,0 +1,41 @@
+name: "Coding Standard Check"
+
+on:
+  workflow_call:
+    inputs:
+      node:
+        required: false
+        type: string
+        default: "20"
+
+      yarn:
+        required: false
+        type: string
+        default: "yarn install"
+
+jobs:
+  static-analysis:
+    name: "Coding Standard (${{ inputs.node }})"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ "ubuntu-latest" ]
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup node"
+        uses: "actions/setup-node@v4"
+        with:
+          node-version: "${{ matrix.node }}"
+
+      - name: "Yarn"
+        uses: "fastybird/.github/.github/actions/setup-yarn@main"
+        with:
+          command: "${{ inputs.yarn }}"
+
+      - name: "Check Prettier with eslint"
+        run: "yarn pretty:check"

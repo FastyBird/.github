@@ -1,0 +1,29 @@
+name: "Composer"
+description: "Setup Composer"
+
+inputs:
+  command:
+    required: false
+    type: string
+    default: "composer install --no-interaction --no-progress --prefer-dist"
+    description: "Composer install command"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: "Get Composer cache directory"
+      id: "composer-cache"
+      shell: "bash"
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: "Cache PHP dependencies"
+      uses: "actions/cache@v4"
+      with:
+        path: "${{ steps.composer-cache.outputs.dir }}"
+        key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}"
+        restore-keys: "${{ runner.os }}-composer-"
+
+    - name: "Install Composer dependencies"
+      shell: "bash"
+      run: "${{ inputs.command }}"

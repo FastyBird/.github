@@ -1,0 +1,94 @@
+name: "Mutation Tests"
+
+on:
+  workflow_call:
+    inputs:
+      make:
+        required: false
+        type: string
+        default: "mutations-tests"
+
+      infection:
+        required: false
+        type: string
+        default: "mutations-infection ARGS='--logger-github'"
+
+      php:
+        required: false
+        type: string
+        default: "8.2"
+
+      php-extensions:
+        required: false
+        type: string
+        default: "json, :php-psr"
+
+      composer:
+        required: false
+        type: string
+        default: "composer install --no-interaction --no-progress --prefer-dist --prefer-stable"
+
+      mysql:
+        required: false
+        type: boolean
+        default: true
+
+env:
+  COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.ORGANIZATION_ACCESS_TOKEN }}"}}'
+
+jobs:
+  tests-mutations:
+    name: "Mutation Tests (${{ inputs.php }})"
+    runs-on: "${{ matrix.operating-system }}"
+
+    strategy:
+      matrix:
+        operating-system: [ "ubuntu-latest" ]
+      fail-fast: false
+
+    if: "github.event_name == 'push'"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "PHP"
+        uses: "fastybird/.github/.github/actions/setup-php@main"
+        with:
+          php: "${{ inputs.php }}"
+
+      - name : "Setup MySQL"
+        if: ${{ inputs.mysql == true }}
+        uses : "mirromutth/mysql-action@v1.1"
+        with :
+          mysql version : "5.7"
+          mysql database : "testdb"
+          mysql root password : "root"
+
+      - name: "Composer"
+        uses: "fastybird/.github/.github/actions/setup-composer@main"
+        with:
+          command: "${{ inputs.composer }}"
+
+      - name: "Mutation tests"
+        run: "make ${{ inputs.make }}"
+
+      - name: "Cache Infection data"
+        uses: "actions/cache@v4"
+        with:
+          path: "var/tools/Infection"
+          key: "php-infection-${{ runner.os }}"
+          restore-keys: "php-infection-${{ runner.os }}"
+
+      - name: "Mutation tests with report"
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        shell: "bash"
+        run: "make ${{ inputs.infection }}"
+
+      - name: "Upload logs"
+        uses: "actions/upload-artifact@v3"
+        with:
+          name: "Logs - Mutations"
+          path: "var/coverage/mutations/infection.log"
+          if-no-files-found: "ignore"
