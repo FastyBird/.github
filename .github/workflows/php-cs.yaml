@@ -6,7 +6,7 @@ on:
       make:
         required: false
         type: string
-        default: "qa"
+        default: "cs"
 
       php:
         required: false
