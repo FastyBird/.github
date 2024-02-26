@@ -52,13 +52,13 @@ jobs:
           extensions: "${{ inputs.php-extensions }}"
           coverage: "pcov"
 
-      - name : "Setup MySQL"
+      - name: "Setup MySQL"
         if: ${{ inputs.mysql == true }}
-        uses : "mirromutth/mysql-action@v1.1"
-        with :
-          mysql version : "5.7"
-          mysql database : "testdb"
-          mysql root password : "root"
+        uses: "mirromutth/mysql-action@v1.1"
+        with:
+          mysql version: "5.7"
+          mysql database: "testdb"
+          mysql root password: "root"
 
       - name: "Composer"
         uses: "fastybird/.github/.github/actions/setup-composer@main"
