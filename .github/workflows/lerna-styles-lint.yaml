@@ -6,7 +6,7 @@ on:
       run:
         required: false
         type: string
-        default: "lint:js"
+        default: "lint:styles"
 
       node:
         required: false
@@ -51,5 +51,5 @@ jobs:
       - name: "Build dependencies"
         run: "yarn build"
 
-      - name: "Check js linter"
+      - name: "Check styles linter"
         run: "yarn ${{ inputs.run }}"

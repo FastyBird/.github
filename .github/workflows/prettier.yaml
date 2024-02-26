@@ -3,6 +3,11 @@ name: "JS Coding Standard Check"
 on:
   workflow_call:
     inputs:
+      run:
+        required: false
+        type: string
+        default: "pretty:check"
+
       node:
         required: false
         type: string
@@ -38,4 +43,4 @@ jobs:
           command: "${{ inputs.yarn }}"
 
       - name: "Check Prettier with eslint"
-        run: "yarn pretty:check"
+        run: "yarn ${{ inputs.run }}"

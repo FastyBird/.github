@@ -3,6 +3,11 @@ name: "Lerna Coding Standard Check"
 on:
   workflow_call:
     inputs:
+      run:
+        required: false
+        type: string
+        default: "types"
+
       node:
         required: false
         type: string
@@ -47,4 +52,4 @@ jobs:
         run: "yarn build"
 
       - name: "Check typescript"
-        run: "yarn types"
+        run: "yarn ${{ inputs.run }}"
