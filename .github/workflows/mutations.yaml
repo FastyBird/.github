@@ -55,17 +55,17 @@ jobs:
       - name: "PHP"
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
-          php: "invalid"
-          extensions: "value"
-          coverage: "given"
+          php-version: "invalid"
+          php-extensions: "value"
+          php-coverage: "given"
 
-      - name : "Setup MySQL"
+      - name: "Setup MySQL"
         if: ${{ inputs.mysql == true }}
-        uses : "mirromutth/mysql-action@v1.1"
-        with :
-          mysql version : "5.7"
-          mysql database : "testdb"
-          mysql root password : "root"
+        uses: "mirromutth/mysql-action@v1.1"
+        with:
+          mysql version: "5.7"
+          mysql database: "testdb"
+          mysql root password: "root"
 
       - name: "Composer"
         uses: "fastybird/.github/.github/actions/setup-composer@main"

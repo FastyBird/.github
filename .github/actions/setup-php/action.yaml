@@ -2,31 +2,31 @@ name: "PHP"
 description: "Setup PHP"
 
 inputs:
-  php:
+  php-version:
     required: false
     type: string
     default: "8.2"
     description: "PHP version to install"
 
-  extensions:
+  php-extensions:
     required: false
     type: string
     default: "json"
     description: "PHP extensions to install"
 
-  tools:
+  php-tools:
     required: false
     type: string
     default: "composer:v2, cs2pr"
     description: "Composer tools"
 
-  ini:
+  php-ini:
     required: false
     type: string
     default: "zend.assertions=1, assert.exception=1"
     description: "PHP additional extensions"
 
-  coverage:
+  php-coverage:
     required: false
     type: string
     default: "xdebug"
@@ -40,8 +40,8 @@ runs:
       id: "extcache"
       uses: "shivammathur/cache-extensions@v1"
       with:
-        php-version: "${{ inputs.php }}"
-        extensions: "${{ inputs.extensions }}"
+        php-version: "${{ inputs.php-version }}"
+        extensions: "${{ inputs.php-extensions }}"
         key: "v1"
 
     - name: "Cache PHP extensions"
@@ -54,11 +54,11 @@ runs:
     - name: "Install PHP"
       uses: "shivammathur/setup-php@v2"
       with:
-        php-version: "${{ inputs.php }}"
-        extensions: "${{ inputs.extensions }}"
-        tools: "${{ inputs.tools }}"
-        ini-values: "${{ inputs.ini }}"
-        coverage: "${{ inputs.coverage }}"
+        php-version: "${{ inputs.php-version }}"
+        extensions: "${{ inputs.php-extensions }}"
+        tools: "${{ inputs.php-tools }}"
+        ini-values: "${{ inputs.php-ini }}"
+        coverage: "${{ inputs.php-coverage }}"
 
     - name: "Setup problem matchers for PHP"
       shell: "bash"
