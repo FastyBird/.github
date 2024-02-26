@@ -5,7 +5,7 @@ inputs:
   php:
     required: false
     type: string
-    default: "8.3"
+    default: "8.2"
     description: "PHP version to install"
 
   extensions:
@@ -29,7 +29,7 @@ inputs:
   coverage:
     required: false
     type: string
-    default: "pcov"
+    default: "xdebug"
     description: "Code coverage settings"
 
 runs:
