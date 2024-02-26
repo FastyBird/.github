@@ -80,7 +80,6 @@ jobs:
           if-no-files-found: "ignore"
 
       - name: "Coveralls.io"
-        if: ${{ inputs.coverage == true }}
         env:
           CI_NAME: github
           CI: true

@@ -28,11 +28,6 @@ on:
         type: boolean
         default: true
 
-      coverage:
-        required: false
-        type: boolean
-        default: false
-
 env:
   COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.ORGANIZATION_ACCESS_TOKEN }}"}}'
 
@@ -51,17 +46,10 @@ jobs:
         uses: "actions/checkout@v4"
 
       - name: "PHP"
-        if: ${{ inputs.coverage == false }}
         uses: "fastybird/.github/.github/actions/setup-php@main"
         with:
           php: "${{ inputs.php }}"
           extensions: "${{ inputs.php-extensions }}"
-
-      - name: "PHP"
-        if: ${{ inputs.coverage == true }}
-        uses: "fastybird/.github/.github/actions/setup-php@main"
-        with:
-          php: "${{ inputs.php }}"
 
       - name : "Setup MySQL"
         if: ${{ inputs.mysql == true }}
