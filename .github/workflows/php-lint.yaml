@@ -16,7 +16,7 @@ on:
       php-extensions:
         required: false
         type: string
-        default: "json, :php-psr"
+        default: "json, intl, :php-psr"
 
       composer:
         required: false
