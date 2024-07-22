@@ -6,7 +6,7 @@ on:
       run:
         required: false
         type: string
-        default: "lint:styles"
+        default: "yarn lint:styles"
 
       node:
         required: false
@@ -43,4 +43,4 @@ jobs:
           command: "${{ inputs.yarn }}"
 
       - name: "Check styles linter"
-        run: "yarn ${{ inputs.run }}"
+        run: "${{ inputs.run }}"

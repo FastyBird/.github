@@ -3,10 +3,10 @@ name: "PHP Coding Linting"
 on:
   workflow_call:
     inputs:
-      make:
+      run:
         required: false
         type: string
-        default: "lint"
+        default: "make lint"
 
       php:
         required: false
@@ -57,4 +57,4 @@ jobs:
         run: "${{ inputs.run }}"
 
       - name: "Coding Linting"
-        run: "make ${{ inputs.make }}"
+        run: "${{ inputs.run }}"

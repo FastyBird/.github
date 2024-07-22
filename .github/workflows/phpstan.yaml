@@ -3,10 +3,10 @@ name: "PHP Code Static Analysis"
 on:
   workflow_call:
     inputs:
-      make:
+      run:
         required: false
         type: string
-        default: "phpstan"
+        default: "make phpstan"
 
       php:
         required: false
@@ -52,4 +52,4 @@ jobs:
           command: "${{ inputs.composer }}"
 
       - name: "PHPStan"
-        run: "make ${{ inputs.make }}"
+        run: "${{ inputs.run }}"

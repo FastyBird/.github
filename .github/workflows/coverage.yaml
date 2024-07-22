@@ -3,10 +3,10 @@ name: "PHP Code Coverage"
 on:
   workflow_call:
     inputs:
-      make:
+      run:
         required: false
         type: string
-        default: "coverage-clover"
+        default: "make coverage-clover"
 
       php:
         required: false
@@ -70,7 +70,7 @@ jobs:
         run: 'echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"'
 
       - name: "Tests"
-        run: "make ${{ inputs.make }}"
+        run: "${{ inputs.run }}"
 
       - name: "Upload logs"
         uses: "actions/upload-artifact@v3"

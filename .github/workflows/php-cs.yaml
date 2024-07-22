@@ -3,10 +3,10 @@ name: "PHP Coding Standard Check"
 on:
   workflow_call:
     inputs:
-      make:
+      run:
         required: false
         type: string
-        default: "cs"
+        default: "make cs"
 
       php:
         required: false
@@ -57,4 +57,4 @@ jobs:
         run: "${{ inputs.run }}"
 
       - name: "Coding Standard"
-        run: "make ${{ inputs.make }}"
+        run: "${{ inputs.run }}"

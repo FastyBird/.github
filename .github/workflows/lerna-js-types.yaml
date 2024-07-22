@@ -6,7 +6,7 @@ on:
       run:
         required: false
         type: string
-        default: "types"
+        default: "yarn types"
 
       node:
         required: false
@@ -46,4 +46,4 @@ jobs:
         run: "yarn build"
 
       - name: "Check typescript"
-        run: "yarn ${{ inputs.run }}"
+        run: "${{ inputs.run }}"
