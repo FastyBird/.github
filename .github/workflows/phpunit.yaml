@@ -28,6 +28,11 @@ on:
         type: boolean
         default: true
 
+      redis:
+        required: false
+        type: boolean
+        default: false
+
 env:
   COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.ORGANIZATION_ACCESS_TOKEN }}"}}'
 
@@ -40,6 +45,12 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ "ubuntu-latest" ]
+
+    services:
+      redis:
+        image: ${{ (inputs.redis == true) && 'redis:latest' || '' }}
+        ports:
+          - 6379:6379
 
     steps:
       - name: "Checkout"
